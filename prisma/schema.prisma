@@ -10,19 +10,45 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Cargo {
+  USUARIO
+  ADMINISTRADOR
+}
+
 model Usuario {
   id Int @id @default(autoincrement())
   nome String
   email String @unique
   telefone String
   senha String
-  cargo Cargo @default(USUARIO)
+  cargo Cargo 
+  // FK
+  pacientes Paciente[]
+  procedimentos Procedimento[]
   @@map("usuario")
 }
 
-enum Cargo {
-  USUARIO
-  ADMINISTRADOR
+model Paciente {
+  id Int @id @default(autoincrement())
+  nome String
+  sobrenome String
+  telefone String
+  idade Int
+  data DateTime
+  procedimento String
+  horario Int
+  // FK
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+  usuarioId Int
+  @@map("paciente")
 }
 
+model Procedimento {
+  id Int @id @default(autoincrement())
+  nome String @unique
+  valor Decimal
+  // FK
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+  usuarioId Int
+}
 // npx prisma migrate dev

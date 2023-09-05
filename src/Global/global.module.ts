@@ -1,6 +1,6 @@
 import { Global, Module } from "@nestjs/common";
 import { PrismaService } from "./prisma.service";
-import { AuthGuard } from "./Auth/auth.guard";
+import { AuthGuard } from "./auth.guard";
 
 @Global()
 @Module({

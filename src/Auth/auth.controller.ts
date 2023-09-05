@@ -13,7 +13,6 @@ export class AuthController {
     private authService: AuthService
   ){}
   
-  // Login
   @Post()
   async login(@Body() body: AuthDto) {
     try {

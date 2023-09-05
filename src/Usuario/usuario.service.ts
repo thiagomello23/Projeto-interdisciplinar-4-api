@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, InternalServerErrorException } from "@nestjs/common";
-import { PrismaService } from "src/prisma.service";
+import { PrismaService } from "../Global/prisma.service";
 import { UsuarioDto } from "./usuarioDto";
 import * as bcrypt from "bcrypt"
 
@@ -30,10 +30,11 @@ export class UsuarioService {
           nome: usuario.nome,
           senha: crypt,
           telefone: usuario.telefone,
-          cargo: usuario.cargo
+          cargo: "USUARIO"
         }
       })
     } catch(e) {
+      console.log(e)
       throw new InternalServerErrorException("Falha ao se cadastrar, por favor tente novamente!")
     }
     return;

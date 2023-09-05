@@ -7,8 +7,9 @@ async function bootstrap() {
 }
 bootstrap();
 
-// Fazer as validações dos dados usando Schemas validators
-// Fazer a rota dos Pacientes
+// Fazer rota para cadastrar paciente
+// Fazer rota para pegar todos os pacientes com base em uma data especifica
+// Fazer rota para pegar um paciente unico
 
 /*
 Tabelas

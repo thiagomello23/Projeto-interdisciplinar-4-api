@@ -3,16 +3,15 @@ import {
   Controller,
   Get,
   Post,
-  Put,
-  HttpException,
-  BadRequestException,
-  UseGuards
+  UseGuards,
+  UsePipes
 } from "@nestjs/common";
 import { UsuarioService } from "./usuario.service";
-import { UsuarioDto } from "./usuarioDto";
-import { AuthGuard } from "src/Auth/auth.guard";
+import { UsuarioDto, UsuarioSchema } from "./usuarioDto";
+import { AuthGuard } from "../Global/auth.guard";
 import { AuthRole } from "src/Auth/auth.decorator";
-import { PublicRoute } from "src/public.decorator";
+import { PublicRoute } from "../Global/public.decorator";
+import { JoiValidationPipe } from "../Global/joi-validation-pipe.pipe";
 
 // Rota protegida
 // Para criar usuário ele precisa estar logado e precisa ser um Administrador
@@ -23,9 +22,9 @@ export class UsuarioController {
 
   constructor(private usuarioService: UsuarioService) {}
   
-  // Cria um usuário com um cargo
   @Post()
   @PublicRoute()
+  @UsePipes(new JoiValidationPipe(UsuarioSchema))
   async createUser(@Body() body: UsuarioDto) {
     try {
       await this.usuarioService.createUser(body);
@@ -37,7 +36,6 @@ export class UsuarioController {
     };
   }
 
-  // Pegar todos os usuários
   @Get("all")
   async getAllUsers() {
     try {

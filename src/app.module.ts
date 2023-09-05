@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { GlobalModule } from './global.module';
+import { GlobalModule } from './Global/global.module';
 import { UsuarioModulo } from './Usuario/usuario.module';
 import { AuthModule } from './Auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
