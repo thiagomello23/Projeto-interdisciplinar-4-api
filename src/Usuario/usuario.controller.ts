@@ -16,7 +16,6 @@ import { JoiValidationPipe } from "../Global/joi-validation-pipe.pipe";
 // Rota protegida
 // Para criar usuário ele precisa estar logado e precisa ser um Administrador
 @Controller("usuario")
-@AuthRole("ADMINISTRADOR")
 @UseGuards(AuthGuard)
 export class UsuarioController {
 
@@ -37,6 +36,7 @@ export class UsuarioController {
   }
 
   @Get("all")
+  @AuthRole("ADMINISTRADOR")
   async getAllUsers() {
     try {
       return await this.usuarioService.getAllUsers()

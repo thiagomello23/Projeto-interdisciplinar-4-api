@@ -10,6 +10,7 @@ bootstrap();
 // Fazer rota para cadastrar paciente
 // Fazer rota para pegar todos os pacientes com base em uma data especifica
 // Fazer rota para pegar um paciente unico
+// Rota de Autenticação com problema
 
 /*
 Tabelas
