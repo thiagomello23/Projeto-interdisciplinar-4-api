@@ -4,3 +4,7 @@ interface PayloadJwt {
   id: string;
   cargo: string;
 }
+
+interface PacienteQueryParam {
+  date: string;
+}

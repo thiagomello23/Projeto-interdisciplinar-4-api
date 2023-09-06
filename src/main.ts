@@ -7,10 +7,12 @@ async function bootstrap() {
 }
 bootstrap();
 
-// Fazer rota para cadastrar paciente
-// Fazer rota para pegar todos os pacientes com base em uma data especifica
-// Fazer rota para pegar um paciente unico
+// Rota para cadastrar procedimento
+// Rota para pegar todos os procedimentos
+// Rota para editar os procedimentos
+
 // Rota de Autenticação com problema
+// Falta as validações da rota dos pacientes com relação ao horario
 
 /*
 Tabelas

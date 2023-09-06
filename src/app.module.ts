@@ -5,6 +5,7 @@ import { AuthModule } from './Auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PacienteModulo } from './Paciente/paciente.module';
+import { ProcedimentoModule } from './Procedimento/procedimento.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { PacienteModulo } from './Paciente/paciente.module';
     }),
     UsuarioModulo,
     AuthModule,
-    PacienteModulo
+    PacienteModulo,
+    ProcedimentoModule
   ],
   controllers: [],
   providers: [],
