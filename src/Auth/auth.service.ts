@@ -5,7 +5,7 @@ import {
 import { PrismaService } from "../Global/prisma.service";
 import { AuthDto } from "./authDto";
 import * as bcrypt from "bcrypt"
-import {JwtService} from "@nestjs/jwt"
+import {JwtService, JwtVerifyOptions} from "@nestjs/jwt"
 
 @Injectable()
 export class AuthService {
@@ -36,5 +36,14 @@ export class AuthService {
       id: authUser.id,
       cargo: authUser.cargo
     })
+  }
+
+  async validate(token: string) {
+    try {
+      const validate = this.jwtService.verify(token, process.env.JWT_SECRET.toString() as JwtVerifyOptions)
+      return validate;
+    } catch(e) {
+      throw new UnauthorizedException("Token invalido!")
+    }
   }
 }

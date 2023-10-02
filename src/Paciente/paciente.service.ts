@@ -67,7 +67,7 @@ export class PacienteService {
       return await this.prismaService.paciente.findMany({
         where: {
           usuarioId: id
-        }
+        },
       })
     } catch(e) {
       throw new InternalServerErrorException("Falha ao puxar os pacientes, por favor tente novamente!")
