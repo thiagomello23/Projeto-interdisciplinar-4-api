@@ -15,6 +15,8 @@ bootstrap();
 // Rota de Autenticação com problema
 // Falta as validações da rota dos pacientes com relação ao horario
 
+// Todo internalServerError derruba o servidor Nestj? verificar.
+
 /*
 Tabelas
   -- Usuário

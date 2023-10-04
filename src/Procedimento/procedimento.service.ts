@@ -53,14 +53,14 @@ export class ProcedimentoService {
   async updateProcedimento(procedimento: ProcedimentoDto) {
 
     // Valida se o procedimento já existe
-    const validation = await this.prismaService.procedimento.findUnique({
-      where: {
-        nome: procedimento.nome
-      }
-    })
+    // const validation = await this.prismaService.procedimento.findUnique({
+    //   where: {
+    //     nome: procedimento.nome
+    //   }
+    // })
 
-    if(validation)
-    throw new BadRequestException("Procedimento já cadastrado")
+    // if(validation)
+    //   throw new BadRequestException("Procedimento já cadastrado")
 
     try {
       await this.prismaService.procedimento.update({
@@ -75,5 +75,28 @@ export class ProcedimentoService {
     } catch(e) {
       throw new InternalServerErrorException("Falha ao editar o procedimento, tente novamente!")
     }
+  }
+
+  async deleteProcedimento(usuarioId: number, procedimentoId: number) {
+
+    // Valida o ID para ver se e um numero ou não
+    if(!(+procedimentoId >= 0)) {
+      throw new BadRequestException("ID Invalido!")
+    }
+
+    // Exclui o processo
+    try {
+      await this.prismaService.procedimento.delete({
+        where: {
+          usuarioId: usuarioId,
+          id: +procedimentoId
+        }
+      })
+    } catch(e) {
+      console.log(e)
+      throw new InternalServerErrorException("Falha ao excluir o procedimento, tente novamente!")
+    }
+
+    return;
   }
 }

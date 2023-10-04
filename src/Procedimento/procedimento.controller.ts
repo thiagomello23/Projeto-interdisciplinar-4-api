@@ -6,7 +6,9 @@ import {
   UsePipes,
   Req,
   Get,
-  Put
+  Put,
+  Delete,
+  Param
 } from "@nestjs/common"
 import { ProcedimentoService } from "./procedimento.service";
 import { AuthGuard } from "src/Global/auth.guard";
@@ -57,6 +59,17 @@ export class ProcedimentoController {
       return {
         msg: "Procedimento editado com sucesso!"
       }
+    } catch(e) {
+      throw e;
+    }
+  }
+
+  @Delete(':id')
+  @AuthRole("USUARIO")
+  async deleteProcedimento(@Req() request, @Param("id") id: number) {
+    const tokenData: PayloadJwt = request.auth;
+    try {
+      await this.procedimentoService.deleteProcedimento(+tokenData.id, id)
     } catch(e) {
       throw e;
     }
