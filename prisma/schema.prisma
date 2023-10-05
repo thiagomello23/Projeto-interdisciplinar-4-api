@@ -37,6 +37,7 @@ model Paciente {
   data DateTime
   procedimento String
   horario Int
+  valor String @default("")
   // FK
   usuario Usuario @relation(fields: [usuarioId], references: [id])
   usuarioId Int

@@ -1,11 +1,11 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException
 } from "@nestjs/common"
 import { PrismaService } from "src/Global/prisma.service";
 import { PacienteDto } from "./pacienteDto";
 import * as dayjs from "dayjs"
-
 
 @Injectable()
 export class PacienteService {
@@ -18,6 +18,19 @@ export class PacienteService {
     // Transformando em data
     const date = dayjs(paciente.data)
 
+    // Verifica o procedimento
+    let procedimento;
+    try {
+      procedimento = await this.prismaService.procedimento.findUnique({
+        where: {
+          nome: paciente.procedimento
+        }
+      })
+    } catch(e) {
+      throw new BadRequestException("Procedimento não existe!")
+    }
+
+    // Insere o novo cadastro no banco de dados
     try {
       await this.prismaService.paciente.create({
         data: {
@@ -28,10 +41,12 @@ export class PacienteService {
           idade: paciente.idade,
           horario: paciente.horario,
           data: date.toISOString(),
-          usuarioId: id
+          usuarioId: id,
+          valor: procedimento.valor.toString()
         }
       });
     } catch(e) {
+      console.log(e)
       throw new InternalServerErrorException("Falha ao cadastrar um paciente, por favor tente novamente!")
     }
 
@@ -62,11 +77,33 @@ export class PacienteService {
     }
   }
 
+  // Puxa todos os pacientes com base no dia atual
   async getAllPacients(id: number) {
+    const diaAtual = dayjs().format("YYYY-M-D");
     try {
       return await this.prismaService.paciente.findMany({
         where: {
-          usuarioId: id
+          usuarioId: id,
+          data: {
+            gte: dayjs(diaAtual).hour(0).toISOString(),
+            lt: dayjs(diaAtual).hour(22).toISOString(),
+          }
+        },
+      })
+    } catch(e) {
+      throw new InternalServerErrorException("Falha ao puxar os pacientes, por favor tente novamente!")
+    }
+  }
+
+  async getAllPacientsByDate(id: number, date: Date) {
+    try {
+      return await this.prismaService.paciente.findMany({
+        where: {
+          usuarioId: id,
+          data: {
+            gte: dayjs(date).hour(0).toISOString(),
+            lt: dayjs(date).hour(22).toISOString(),
+          }
         },
       })
     } catch(e) {
