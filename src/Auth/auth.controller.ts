@@ -29,7 +29,6 @@ export class AuthController {
   @Get(":token")
   async validate(@Param() {token}: any) {
     try {
-      console.log(token)
       return await this.authService.validate(token)
     } catch(e) {
       throw e;

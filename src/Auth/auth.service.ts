@@ -34,7 +34,8 @@ export class AuthService {
     return await this.jwtService.signAsync({
       email: authUser.email,
       id: authUser.id,
-      cargo: authUser.cargo
+      cargo: authUser.cargo,
+      nome: authUser.nome
     })
   }
 

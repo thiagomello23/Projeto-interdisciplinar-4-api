@@ -4,7 +4,8 @@ import {
   Get,
   Post,
   UseGuards,
-  UsePipes
+  UsePipes,
+  Req
 } from "@nestjs/common";
 import { UsuarioService } from "./usuario.service";
 import { UsuarioDto, UsuarioSchema } from "./usuarioDto";
@@ -33,6 +34,18 @@ export class UsuarioController {
     return {
       msg: "Usuário cadastrado com sucesso!"
     };
+  }
+
+  @Post("/relatorio")
+  @AuthRole("USUARIO")
+  async generateRelatorio(@Body() body: RelatorioData, @Req() request) {
+    console.log(body)
+    const tokenData: PayloadJwt = request.auth;
+    try {
+      return await this.usuarioService.generateRelatorio(+tokenData.id, body)
+    } catch(e) {
+      throw e;
+    }
   }
 
   @Get("all")
