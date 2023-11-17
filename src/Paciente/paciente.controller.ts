@@ -66,6 +66,16 @@ export class PacienteController {
     }
   }
 
+  @Get('/single/:id')
+  @AuthRole("USUARIO")
+  async getSinglePacient(@Req() request, @Param('id') id: number) {
+    try {
+      return await this.pacienteService.getSinglePacient(+id)
+    } catch(e) {
+      throw e;
+    }
+  }
+
   @Get(":date")
   @AuthRole("USUARIO")
   async getAllPacientsByDate(@Req() request, @Param("date") date: Date) {
@@ -83,16 +93,6 @@ export class PacienteController {
     const tokenData: PayloadJwt = request.auth;
     try {
       return await this.pacienteService.getBySingleDate(+tokenData.id, params.date)
-    } catch(e) {
-      throw e;
-    }
-  }
-
-  @Get(':id')
-  @AuthRole("USUARIO")
-  async getSinglePacient(@Req() request, @Param('id') id: number) {
-    try {
-      return await this.pacienteService.getSinglePacient(+id)
     } catch(e) {
       throw e;
     }

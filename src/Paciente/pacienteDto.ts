@@ -12,12 +12,11 @@ export const PacienteSchema = Joi.object({
   data: Joi.date().required()
 })
 
-
 export class PacienteDto {
   id: number;
   nome: string
-  sobrenome: string
-  telefone: string
+  sobrenome: string;
+  telefone: string;
   idade: number;
   data: Date;
   procedimento: string
